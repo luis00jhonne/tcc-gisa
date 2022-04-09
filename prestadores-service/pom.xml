@@ -8,7 +8,7 @@
 		<version>2.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.ljcm</groupId>
+	<groupId>br.com.gisa</groupId>
 	<artifactId>prestadores-service</artifactId>
 	<version>1.0.0</version>
 	<name>prestadores-service</name>
