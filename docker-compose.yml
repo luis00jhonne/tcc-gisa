@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  associados:
+    image: associados-service:1.0.0
+     
+    ports:
+      - 8081:8081
+
+    networks:
+      - poc-gisa-net
+
+networks:
+    poc-gisa-net:
