@@ -3,10 +3,6 @@ package br.com.gisa.associados.controller;
 import br.com.gisa.associados.dto.model.AssociadoDTO;
 import br.com.gisa.associados.dto.model.AutorizacaoExameConsultaDTO;
 import br.com.gisa.associados.dto.response.Response;
-import br.com.gisa.associados.enums.SituacaoAssociadoEnum;
-import br.com.gisa.associados.enums.SituacaoAutorizacaoEnum;
-import br.com.gisa.associados.exceptions.CPFExistenteException;
-import br.com.gisa.associados.exceptions.InvalidUpdateException;
 import br.com.gisa.associados.exceptions.NotFoundException;
 import br.com.gisa.associados.model.Associado;
 import br.com.gisa.associados.model.AutorizacaoExameConsulta;
@@ -16,9 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -27,10 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import java.util.Optional;
 
 @Log4j2
 @CrossOrigin
@@ -42,8 +33,9 @@ public class AutorizacaoController {
 	private AutorizacaoService autorizacaoService;
 
     @Autowired
-    public AutorizacaoController(AssociadoService associadoService){
+    public AutorizacaoController(AssociadoService associadoService, AutorizacaoService autorizacaoService){
         this.associadoService = associadoService;
+		this.autorizacaoService = autorizacaoService;
     }
 
 	@ApiOperation(value = "Autorizar a realização de uma consulta ou exame")
@@ -67,6 +59,7 @@ public class AutorizacaoController {
 			throw new NotFoundException("CPF do Associado não encontrado.");
 		}
 
+		dto.setAssociado(associadoEncontrado.get());
 		AutorizacaoExameConsulta autorizacao = autorizacaoService.autorizarExameConsulta(dto.convertDTOToEntity());
 
 		AutorizacaoExameConsultaDTO autorizacaoDtoRetorno = autorizacao.convertEntityToDTO();
@@ -74,6 +67,25 @@ public class AutorizacaoController {
 		response.setData(autorizacaoDtoRetorno);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "Consultar informações sobre uma autorização de exame/consulta")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna as informações da autorização especificada"),
+			@ApiResponse(code = 404, message = "Código de autorização não encontrado."),
+			@ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
+	@GetMapping(path = "/{codigoAutorizacao}")
+	public ResponseEntity<Response<AutorizacaoExameConsultaDTO>> listarPorId(@PathVariable String codigoAutorizacao) throws NotFoundException {
+
+		Response<AutorizacaoExameConsultaDTO> response = new Response<>();
+		AutorizacaoExameConsulta autorizacao = autorizacaoService.consultarExameConsulta(codigoAutorizacao);
+
+		AutorizacaoExameConsultaDTO dto = autorizacao.convertEntityToDTO();
+
+		createSelfLink(autorizacao, dto);
+		response.setData(dto);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
     
     private void createSelfLink(AutorizacaoExameConsulta entity, AutorizacaoExameConsultaDTO dto) {

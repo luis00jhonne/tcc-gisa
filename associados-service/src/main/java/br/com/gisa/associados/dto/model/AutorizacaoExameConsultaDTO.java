@@ -22,13 +22,11 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AutorizacaoExameConsultaDTO extends RepresentationModel<AutorizacaoExameConsultaDTO> {
 
-    private Long id;
-
     @NotNull(message = "O associado deve ser informado.")
     private Associado associado;
 
     @NotNull(message = "O exame/consulta deve ser informado.")
-    private ExameConsultaDTO exameConsulta;
+    private ExameConsulta exameConsulta;
 
     private String codigoAutorizacao;
 
