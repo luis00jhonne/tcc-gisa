@@ -2,6 +2,7 @@ package br.com.gisa.associados.service.impl;
 
 import br.com.gisa.associados.enums.SituacaoAutorizacaoEnum;
 import br.com.gisa.associados.exceptions.NotFoundException;
+import br.com.gisa.associados.messaging.Publisher;
 import br.com.gisa.associados.model.Associado;
 import br.com.gisa.associados.model.AutorizacaoExameConsulta;
 import br.com.gisa.associados.repository.AutorizacaoRepository;
@@ -22,12 +23,12 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
 
     private AutorizacaoRepository autorizacaoRepository;
 
-    private final AmqpTemplate queueSender;
+    private Publisher publisher;
 
     @Autowired
-    public AutorizacaoServiceImpl(AutorizacaoRepository autorizacaoRepository, AmqpTemplate queueSender){
+    public AutorizacaoServiceImpl(AutorizacaoRepository autorizacaoRepository, Publisher publisher){
         this.autorizacaoRepository = autorizacaoRepository;
-        this.queueSender = queueSender;
+        this.publisher = publisher;
     }
 
     public AutorizacaoExameConsulta save(AutorizacaoExameConsulta associado){
@@ -39,10 +40,10 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
     public AutorizacaoExameConsulta autorizarExameConsulta(AutorizacaoExameConsulta autorizacaoExameConsulta) {
 
         autorizacaoExameConsulta.setSituacao(SituacaoAutorizacaoEnum.SOLICITADO);
-        autorizacaoExameConsulta.setDataAutorizacao(new Date());
+        autorizacaoExameConsulta.setDataSolicitacao(new Date());
         autorizacaoExameConsulta.setCodigoAutorizacao(UUID.randomUUID().toString());
 
-        publishInQueue(autorizacaoExameConsulta);
+        publisher.publishInQueue(autorizacaoExameConsulta);
 
         return save(autorizacaoExameConsulta);
     }
@@ -51,10 +52,5 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
     public AutorizacaoExameConsulta consultarExameConsulta(String codigoAutorizacao) throws NotFoundException {
         return autorizacaoRepository.findOneByCodigoAutorizacao(codigoAutorizacao)
                 .orElseThrow(() -> new NotFoundException("Autorização não encontrada"));
-    }
-
-    public void publishInQueue(AutorizacaoExameConsulta autorizacaoExameConsulta){
-        Gson gson = new Gson();
-        queueSender.convertAndSend("gisa-exchange", "gisa-autorizacao-solicitacao",  gson.toJson(autorizacaoExameConsulta));
     }
 }
