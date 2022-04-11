@@ -1,7 +1,9 @@
 package br.com.gisa.associados.dto.model;
 
+import br.com.gisa.associados.enums.TipoPlanoEnum;
 import br.com.gisa.associados.model.Associado;
 import br.com.gisa.associados.enums.SituacaoAssociadoEnum;
+import br.com.gisa.associados.model.ExameConsulta;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -9,6 +11,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,11 +32,6 @@ public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
     @NotNull(message = "O e-mail não pode ser vazio.")
     private String email;
 
-    @NotNull(message = "A especialidade não pode ser vazio.")
-    private String especialidade;
-
-    private Boolean mei;
-
     private Date dataNascimento;
 
     @NotNull(message = "O Celular não pode ser vazio.")
@@ -47,8 +45,13 @@ public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
     private String cep;
     private String localizacao;
     private SituacaoAssociadoEnum situacao;
+
+    @NotNull(message = "O tipo de plano precisa ser informado.")
+    private TipoPlanoEnum tipoPlano;
     private Date dataCadastro;
     private Date dataAtualizacao;
+
+    private List<ExameConsulta> historico;
 
     public Associado convertDTOToEntity() {
         return new ModelMapper().map(this, Associado.class);

@@ -43,7 +43,7 @@ public class AssociadoServiceImpl implements AssociadoService {
     @Override
     public Associado findById(Long id) throws NotFoundException {
         return associadoRepository.findById(
-                id).orElseThrow(() -> new NotFoundException("Trabalhador com id = " + id + " nao encontrado"));
+                id).orElseThrow(() -> new NotFoundException("Associado com id = " + id + " nao encontrado"));
     }
 
     public Associado save(Associado associado){

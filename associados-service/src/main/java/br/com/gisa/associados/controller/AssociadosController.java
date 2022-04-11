@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.hateoas.Link;
@@ -44,7 +45,7 @@ public class AssociadosController {
     }
 
     @ApiOperation(value = "Listar todos os associados")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna uma lista com associados, considerando os filtros"),
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna uma lista com associados, considerando o filtro de nome e parâmetros de paginação"),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @GetMapping
     public ResponseEntity<Response<List<AssociadoDTO>>> listarTodos(
@@ -55,19 +56,9 @@ public class AssociadosController {
     	Response<List<AssociadoDTO>> response = new Response<>();
     	
     	Page<Associado> list = associadoService.findAll(page, limit, filterName);
-		
-		List<AssociadoDTO> itemsDTO = new ArrayList<>();
-		if (list.hasContent()) {
-			list.stream().forEach(t -> itemsDTO.add(t.convertEntityToDTO()));
-			itemsDTO.stream().forEach(dto -> {
-				try {
-					createSelfLinkInCollections(dto);
-				} catch (NotFoundException e) {
-					log.error("Nenhum associado cadastrado.");
-				}
-			});
-		}
-		
+
+		List<AssociadoDTO> itemsDTO = getAssociadoDTOS(list);
+
 		response.setData(itemsDTO);
 		response.setPage(list.getPageable());
 		response.setTotalPages(list.getTotalPages());
@@ -76,7 +67,7 @@ public class AssociadosController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Listar informações cadastrais e histórico de saúde de um associado")
+	@ApiOperation(value = "Listar informações cadastrais e histórico de saúde de um associado")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna as informações cadastrais do associado especificado pelo id"),
             @ApiResponse(code = 404, message = "Associado não encontrado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
@@ -88,8 +79,6 @@ public class AssociadosController {
 
 		AssociadoDTO dto = trabalhador.convertEntityToDTO();
 
-		//buscar historico do associado atraves do sistema de acesso-ao-legado
-    	
     	createSelfLink(trabalhador, dto);
     	response.setData(dto);
 
@@ -112,9 +101,9 @@ public class AssociadosController {
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		Optional<Associado> vehicleToFind = associadoService.findByCpf(dto.getCpf());
+		Optional<Associado> associadoEncontrado = associadoService.findByCpf(dto.getCpf());
 		
-		if(vehicleToFind.isPresent()) {
+		if(associadoEncontrado.isPresent()) {
 			throw new CPFExistenteException("CPF já cadastrado.");
 		}
 
@@ -129,39 +118,6 @@ public class AssociadosController {
 		
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-
-	@ApiOperation(value = "Autorizar a realização de uma consulta ou exame")
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Autorização da consulta/exame realizada com sucesso"),
-			@ApiResponse(code = 400, message = "Erro na autorização da consulta/exame."),
-			@ApiResponse(code = 204, message = "Exame não autorizado"),
-			@ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
-	@PostMapping(path="/autorizacao")
-	public ResponseEntity<Response<AssociadoDTO>> autorizarConsultaExame(@Valid @RequestBody AssociadoDTO dto,  BindingResult result) throws NotFoundException, CPFExistenteException {
-
-		Response<AssociadoDTO> response = new Response<>();
-
-		if (result.hasErrors()) {
-			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
-			return ResponseEntity.badRequest().body(response);
-		}
-
-		Optional<Associado> vehicleToFind = associadoService.findByCpf(dto.getCpf());
-
-		if(vehicleToFind.isPresent()) {
-			throw new CPFExistenteException("CPF já cadastrado.");
-		}
-
-		dto.setSituacao(SituacaoAssociadoEnum.SUSPENSO);
-		dto.setDataCadastro(new Date());
-		Associado trabalhadorToCreate = associadoService.save(dto.convertDTOToEntity());
-
-		AssociadoDTO dtoSaved = trabalhadorToCreate.convertEntityToDTO();
-		createSelfLink(trabalhadorToCreate, dtoSaved);
-
-		response.setData(dtoSaved);
-
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
-	}
 
     @ApiOperation(value = "Atualizar o cadastro do associado")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastro do associado atualizado com sucesso."),
@@ -207,13 +163,30 @@ public class AssociadosController {
     public ResponseEntity<Response<String>> inativarAssociado(@PathVariable("id") Long id) throws NotFoundException{
 
     	Response<String> response = new Response<>();
-		Associado trabalhador = associadoService.findById(id);
-		
-		associadoService.deleteById(trabalhador.getId());
-		response.setData("Associado de id = " + trabalhador.getId() + " deletado com sucesso.");
+		Associado associado = associadoService.findById(id);
+		associado.setSituacao(SituacaoAssociadoEnum.INATIVO);
+
+		associadoService.save(associado);
+		response.setData("Associado de id = " + associado.getId() + " inativado com sucesso.");
 		
 		return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
+
+	@NotNull
+	private List<AssociadoDTO> getAssociadoDTOS(Page<Associado> list) {
+		List<AssociadoDTO> itemsDTO = new ArrayList<>();
+		if (list.hasContent()) {
+			list.stream().forEach(t -> itemsDTO.add(t.convertEntityToDTO()));
+			itemsDTO.stream().forEach(dto -> {
+				try {
+					createSelfLinkInCollections(dto);
+				} catch (NotFoundException e) {
+					log.error("Nenhum associado cadastrado.");
+				}
+			});
+		}
+		return itemsDTO;
+	}
     
     private void createSelfLink(Associado trabalhador, AssociadoDTO trabalhadorDTO) {
 		Link selfLink = WebMvcLinkBuilder.linkTo(AssociadosController.class).slash(trabalhador.getId()).withSelfRel();

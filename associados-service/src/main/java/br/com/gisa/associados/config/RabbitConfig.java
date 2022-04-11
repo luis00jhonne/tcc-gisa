@@ -16,19 +16,20 @@ public class RabbitConfig {
     @Value("${associados.queue.name}")
     private String queueName;
 
-    @Bean()
+    //@Bean()
     public Queue queue() {
         return new Queue(queueName, true);
     }
 
 
-    @Bean
+    //@Bean
     DirectExchange exchange() {
         return new DirectExchange("direct-exchange");
     }
 
-    @Bean
+   // @Bean
     Binding testeBinding(Queue queue, DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("associados-service");
+       // return BindingBuilder.bind(queue).to(exchange).with("associados-service");
+        return null;
     }
 }

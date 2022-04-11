@@ -46,7 +46,6 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-00");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
@@ -67,7 +66,6 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-11");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity

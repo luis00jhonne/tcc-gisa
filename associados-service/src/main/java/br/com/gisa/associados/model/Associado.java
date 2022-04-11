@@ -6,12 +6,10 @@ import br.com.gisa.associados.enums.TipoPlanoEnum;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity(name="associados")
@@ -38,6 +36,9 @@ public class Associado implements Serializable {
     private TipoPlanoEnum tipoPlano;
     private Date dataCadastro;
     private Date dataAtualizacao;
+
+    @OneToMany(mappedBy = "associado", fetch=FetchType.EAGER)
+    private List<AutorizacaoExameConsulta> historico;
 
     public AssociadoDTO convertEntityToDTO() {
         return new ModelMapper().map(this, AssociadoDTO.class);
