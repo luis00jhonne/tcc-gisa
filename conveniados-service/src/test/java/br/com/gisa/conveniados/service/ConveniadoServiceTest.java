@@ -1,8 +1,8 @@
 package br.com.gisa.conveniados.service;
 
 import br.com.gisa.conveniados.exceptions.NotFoundException;
-import br.com.gisa.conveniados.model.Associado;
-import br.com.gisa.conveniados.repository.AssociadoRepository;
+import br.com.gisa.conveniados.model.Conveniado;
+import br.com.gisa.conveniados.repository.ConveniadoRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -32,13 +32,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, MockitoTestExecutionListener.class })
-public class AssociadoServiceTest {
+public class ConveniadoServiceTest {
 	
 	@Autowired
-	private AssociadoService service;
+	private ConveniadoService service;
 
 	@MockBean
-	private AssociadoRepository repository;
+	private ConveniadoRepository repository;
 
 	private static final String CPF = "123.456.789-00";
 	
@@ -46,9 +46,9 @@ public class AssociadoServiceTest {
 	@Order(1)
 	public void testSaveVehicle() {
 		
-		BDDMockito.given(repository.save(Mockito.any(Associado.class)))
+		BDDMockito.given(repository.save(Mockito.any(Conveniado.class)))
 			.willReturn(getTrabalhadorMock());
-		Associado response = service.save(new Associado());
+		Conveniado response = service.save(new Conveniado());
 		
 		assertNotNull(response);
 		assertEquals("123.456.789-00", response.getCpf());
@@ -59,9 +59,9 @@ public class AssociadoServiceTest {
 	public void testFindByCPF() throws NotFoundException {
 		
 		BDDMockito.given(repository.findOneByCpf(Mockito.anyString()))
-			.willReturn(Optional.of(new Associado()));
+			.willReturn(Optional.of(new Conveniado()));
 		
-		Optional<Associado> response = service.findByCpf(CPF);
+		Optional<Conveniado> response = service.findByCpf(CPF);
 		assertTrue(!response.isEmpty());
 	}
 	
@@ -69,19 +69,19 @@ public class AssociadoServiceTest {
 	@Order(3)
 	public void testFindAllVehicles() {
 		
-		List<Associado> transactions = new ArrayList<>();
+		List<Conveniado> transactions = new ArrayList<>();
 		transactions.add(getTrabalhadorMock());
-		Page<Associado> page = new PageImpl<>(transactions);
+		Page<Conveniado> page = new PageImpl<>(transactions);
 		
 		BDDMockito.given(repository.findAll(Mockito.any(Pageable.class))).willReturn(page);
 		
-		Page<Associado> response = service.findAll(0, 10, null);
+		Page<Conveniado> response = service.findAll(0, 10, null);
 		assertNotNull(response);
 	}
 	
-	private Associado getTrabalhadorMock() {
+	private Conveniado getTrabalhadorMock() {
 
-		Associado entity = new Associado();
+		Conveniado entity = new Conveniado();
 		entity.setNome("Trabalhador");
 		entity.setCpf(CPF);
 		entity.setEmail("email@email.com");

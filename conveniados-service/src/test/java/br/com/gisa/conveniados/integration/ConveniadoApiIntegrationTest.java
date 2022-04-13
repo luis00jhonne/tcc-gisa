@@ -1,6 +1,6 @@
 package br.com.gisa.conveniados.integration;
 
-import br.com.gisa.conveniados.dto.model.AssociadoDTO;
+import br.com.gisa.conveniados.dto.model.ConveniadoDTO;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TrabalhadorApiIntegrationTest {
+public class ConveniadoApiIntegrationTest {
 
 	@LocalServerPort
 	private int port;
@@ -41,16 +41,15 @@ public class TrabalhadorApiIntegrationTest {
 	@Order(1)
 	public void testCreateTrabalhadorWithId10() {
 
-		AssociadoDTO dto = new AssociadoDTO();
+		ConveniadoDTO dto = new ConveniadoDTO();
 		dto.setId(10L);
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-00");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
-		final HttpEntity<AssociadoDTO> entity = new HttpEntity<>(dto);
+		final HttpEntity<ConveniadoDTO> entity = new HttpEntity<>(dto);
 
 		ResponseEntity<String> responseEntity = this.restTemplate
 				.exchange("http://localhost:" + port + endpoint, HttpMethod.POST, entity, String.class);
@@ -62,16 +61,15 @@ public class TrabalhadorApiIntegrationTest {
 	@Order(2)
 	public void testCreateTrabalhadorWithId20() {
 
-		AssociadoDTO dto = new AssociadoDTO();
+		ConveniadoDTO dto = new ConveniadoDTO();
 		dto.setId(20L);
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-11");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
-		final HttpEntity<AssociadoDTO> entity = new HttpEntity<>(dto);
+		final HttpEntity<ConveniadoDTO> entity = new HttpEntity<>(dto);
 
 		ResponseEntity<String> responseEntity = this.restTemplate
 				.exchange("http://localhost:" + port + endpoint, HttpMethod.POST, entity, String.class);

@@ -1,7 +1,7 @@
 package br.com.gisa.conveniados.dto.model;
 
-import br.com.gisa.conveniados.model.Associado;
-import br.com.gisa.conveniados.enums.SituacaoAssociadoEnum;
+import br.com.gisa.conveniados.enums.SituacaoConveniadoEnum;
+import br.com.gisa.conveniados.model.Conveniado;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
+public class ConveniadoDTO extends RepresentationModel<ConveniadoDTO> {
 
     private Long id;
 
@@ -28,11 +28,6 @@ public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
 
     @NotNull(message = "O e-mail não pode ser vazio.")
     private String email;
-
-    @NotNull(message = "A especialidade não pode ser vazio.")
-    private String especialidade;
-
-    private Boolean mei;
 
     private Date dataNascimento;
 
@@ -46,11 +41,11 @@ public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
     private String complemento;
     private String cep;
     private String localizacao;
-    private SituacaoAssociadoEnum situacao;
+    private SituacaoConveniadoEnum situacao;
     private Date dataCadastro;
     private Date dataAtualizacao;
 
-    public Associado convertDTOToEntity() {
-        return new ModelMapper().map(this, Associado.class);
+    public Conveniado convertDTOToEntity() {
+        return new ModelMapper().map(this, Conveniado.class);
     }
 }

@@ -3,11 +3,11 @@ package br.com.gisa.conveniados.controller;
 import br.com.gisa.conveniados.exceptions.CPFExistenteException;
 import br.com.gisa.conveniados.exceptions.InvalidUpdateException;
 import br.com.gisa.conveniados.exceptions.NotFoundException;
-import br.com.gisa.conveniados.model.Associado;
-import br.com.gisa.conveniados.enums.SituacaoAssociadoEnum;
-import br.com.gisa.conveniados.dto.model.AssociadoDTO;
+import br.com.gisa.conveniados.model.Conveniado;
+import br.com.gisa.conveniados.enums.SituacaoConveniadoEnum;
+import br.com.gisa.conveniados.dto.model.ConveniadoDTO;
 import br.com.gisa.conveniados.dto.response.Response;
-import br.com.gisa.conveniados.service.AssociadoService;
+import br.com.gisa.conveniados.service.ConveniadoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -33,13 +33,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Log4j2
 @CrossOrigin
 @RestController
-@RequestMapping("/conveniados/v1")
+@RequestMapping("/v1/conveniados")
 public class ConveniadosController {
 
-	private AssociadoService conveniadoService;
+	private ConveniadoService conveniadoService;
 
     @Autowired
-    public ConveniadosController(AssociadoService conveniadoService){
+    public ConveniadosController(ConveniadoService conveniadoService){
         this.conveniadoService = conveniadoService;
     }
 
@@ -47,16 +47,16 @@ public class ConveniadosController {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna uma lista com conveniados, considerando os filtros"),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @GetMapping
-    public ResponseEntity<Response<List<AssociadoDTO>>> listarTodos(
+    public ResponseEntity<Response<List<ConveniadoDTO>>> listarTodos(
             @RequestParam(required = false) String filterName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit){
     	
-    	Response<List<AssociadoDTO>> response = new Response<>();
+    	Response<List<ConveniadoDTO>> response = new Response<>();
     	
-    	Page<Associado> list = conveniadoService.findAll(page, limit, filterName);
+    	Page<Conveniado> list = conveniadoService.findAll(page, limit, filterName);
 		
-		List<AssociadoDTO> itemsDTO = new ArrayList<>();
+		List<ConveniadoDTO> itemsDTO = new ArrayList<>();
 		if (list.hasContent()) {
 			list.stream().forEach(t -> itemsDTO.add(t.convertEntityToDTO()));
 			itemsDTO.stream().forEach(dto -> {
@@ -76,21 +76,19 @@ public class ConveniadosController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Listar informações cadastrais e histórico de saúde de um conveniado")
+    @ApiOperation(value = "Listar informações cadastrais de um conveniado")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna as informações cadastrais do conveniado especificado pelo id"),
-            @ApiResponse(code = 404, message = "Associado não encontrado."),
+            @ApiResponse(code = 404, message = "Conveniado não encontrado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Response<AssociadoDTO>> listarPorId(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<Response<ConveniadoDTO>> listarPorId(@PathVariable Long id) throws NotFoundException {
     	
-    	Response<AssociadoDTO> response = new Response<>();
-    	Associado trabalhador = conveniadoService.findById(id);
+    	Response<ConveniadoDTO> response = new Response<>();
+    	Conveniado conveniado = conveniadoService.findById(id);
 
-		AssociadoDTO dto = trabalhador.convertEntityToDTO();
+		ConveniadoDTO dto = conveniado.convertEntityToDTO();
 
-		//buscar historico do conveniado atraves do sistema de acesso-ao-legado
-    	
-    	createSelfLink(trabalhador, dto);
+		createSelfLink(conveniado, dto);
     	response.setData(dto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -98,32 +96,26 @@ public class ConveniadosController {
     }
 
     @ApiOperation(value = "Cadastrar um novo conveniado")
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Associado cadastrado com sucesso"),
+    @ApiResponses(value = { @ApiResponse(code = 201, message = "Conveniado cadastrado com sucesso"),
     		 @ApiResponse(code = 400, message = "Os dados da requisição estão incompletos ou incorretos."),
     		@ApiResponse(code = 204, message = "Erro ao cadastrar o conveniado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @PostMapping
-    public ResponseEntity<Response<AssociadoDTO>> salvarAssociado(@Valid @RequestBody AssociadoDTO dto,  BindingResult result) throws NotFoundException, CPFExistenteException {
+    public ResponseEntity<Response<ConveniadoDTO>> salvarConveniado(@Valid @RequestBody ConveniadoDTO dto, BindingResult result) {
 
-    	Response<AssociadoDTO> response = new Response<>();
+    	Response<ConveniadoDTO> response = new Response<>();
 
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		Optional<Associado> vehicleToFind = conveniadoService.findByCpf(dto.getCpf());
-		
-		if(vehicleToFind.isPresent()) {
-			throw new CPFExistenteException("CPF já cadastrado.");
-		}
-
-		dto.setSituacao(SituacaoAssociadoEnum.SUSPENSO);
+		dto.setSituacao(SituacaoConveniadoEnum.ATIVO);
 		dto.setDataCadastro(new Date());
-		Associado trabalhadorToCreate = conveniadoService.save(dto.convertDTOToEntity());
+		Conveniado conveniadoToCreate = conveniadoService.save(dto.convertDTOToEntity());
 
-		AssociadoDTO dtoSaved = trabalhadorToCreate.convertEntityToDTO();
-		createSelfLink(trabalhadorToCreate, dtoSaved);
+		ConveniadoDTO dtoSaved = conveniadoToCreate.convertEntityToDTO();
+		createSelfLink(conveniadoToCreate, dtoSaved);
 
 		response.setData(dtoSaved);
 		
@@ -133,66 +125,66 @@ public class ConveniadosController {
     @ApiOperation(value = "Atualizar o cadastro do conveniado")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastro do conveniado atualizado com sucesso."),
             @ApiResponse(code = 400, message = "Os dados da requisição estão incompletos ou incorretos.."),
-            @ApiResponse(code = 404, message = "Associado não encontrado."),
+            @ApiResponse(code = 404, message = "Conveniado não encontrado."),
             @ApiResponse(code = 409, message = "Tentativa de atualização inválida."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @PutMapping(path="/{id}")
-    public ResponseEntity<Response<AssociadoDTO>> atualizarAssociado(@PathVariable("id") Long id, @Valid @RequestBody AssociadoDTO dto, BindingResult result) throws NotFoundException, InvalidUpdateException {
+    public ResponseEntity<Response<ConveniadoDTO>> atualizarConveniado(@PathVariable("id") Long id, @Valid @RequestBody ConveniadoDTO dto, BindingResult result) throws NotFoundException, InvalidUpdateException {
 
-    	Response<AssociadoDTO> response = new Response<>();
+    	Response<ConveniadoDTO> response = new Response<>();
 
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		Associado trabalhadorFind = conveniadoService.findById(id);
-		if (!trabalhadorFind.getId().equals(dto.getId()) ) {
+		Conveniado conveniadoFind = conveniadoService.findById(id);
+		if (!conveniadoFind.getId().equals(dto.getId()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o id do cadastro = " + dto.getId());
 		}
 		
-		if (!trabalhadorFind.getCpf().equals(dto.getCpf()) ) {
+		if (!conveniadoFind.getCpf().equals(dto.getCpf()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o CPF do cadastro =" + dto.getCpf());
 		}
 
 		dto.setDataAtualizacao(new Date());
-		Associado trabalhadorUpdate = conveniadoService.save(dto.convertDTOToEntity());
+		Conveniado conveniadoUpdate = conveniadoService.save(dto.convertDTOToEntity());
 		
-		AssociadoDTO itemDTO = trabalhadorUpdate.convertEntityToDTO();
-		createSelfLink(trabalhadorUpdate, itemDTO);
+		ConveniadoDTO itemDTO = conveniadoUpdate.convertEntityToDTO();
+		createSelfLink(conveniadoUpdate, itemDTO);
 		response.setData(itemDTO);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Inativar o cadastro de um conveniado")
-    @ApiResponses(value = { @ApiResponse(code = 204, message = "Associado inativado com sucesso"),
+    @ApiOperation(value = "Apagar o cadastro de um conveniado")
+    @ApiResponses(value = { @ApiResponse(code = 204, message = "Conveniado inativado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição incorreta."),
-            @ApiResponse(code = 404, message = "Associado não encontrado."),
+            @ApiResponse(code = 404, message = "Conveniado não encontrado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<Response<String>> inativarAssociado(@PathVariable("id") Long id) throws NotFoundException{
+    public ResponseEntity<Response<String>> inativarConveniado(@PathVariable("id") Long id) throws NotFoundException{
 
     	Response<String> response = new Response<>();
-		Associado trabalhador = conveniadoService.findById(id);
+		Conveniado conveniado = conveniadoService.findById(id);
 		
-		conveniadoService.deleteById(trabalhador.getId());
-		response.setData("Associado de id = " + trabalhador.getId() + " deletado com sucesso.");
+		conveniadoService.deleteById(conveniado.getId());
+		response.setData("Conveniado de id = " + conveniado.getId() + " deletado com sucesso.");
 		
 		return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
     
-    private void createSelfLink(Associado trabalhador, AssociadoDTO trabalhadorDTO) {
-		Link selfLink = WebMvcLinkBuilder.linkTo(ConveniadosController.class).slash(trabalhador.getId()).withSelfRel();
-		trabalhadorDTO.add(selfLink);
+    private void createSelfLink(Conveniado conveniado, ConveniadoDTO conveniadoDTO) {
+		Link selfLink = WebMvcLinkBuilder.linkTo(ConveniadosController.class).slash(conveniado.getId()).withSelfRel();
+		conveniadoDTO.add(selfLink);
 	}
 	
-	private void createSelfLinkInCollections(final AssociadoDTO trabalhadorDTO)
+	private void createSelfLinkInCollections(final ConveniadoDTO conveniadoDTO)
 			throws NotFoundException {
 		Link selfLink = linkTo(methodOn(ConveniadosController.class)
-				.listarPorId(trabalhadorDTO.getId()))
+				.listarPorId(conveniadoDTO.getId()))
 				.withSelfRel().expand();
-		trabalhadorDTO.add(selfLink);
+		conveniadoDTO.add(selfLink);
 	
 	}
 }

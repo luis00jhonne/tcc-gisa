@@ -1,9 +1,8 @@
 package br.com.gisa.conveniados.enums;
 
-public enum SituacaoAssociadoEnum {
+public enum SituacaoConveniadoEnum {
 
     ATIVO,
-    SUSPENSO,
     INATIVO;
 
 }

@@ -1,6 +1,6 @@
 package br.com.gisa.conveniados.repository;
 
-import br.com.gisa.conveniados.model.Associado;
+import br.com.gisa.conveniados.model.Conveniado;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 @RepositoryRestResource(exported = false)
-public interface AssociadoRepository extends JpaRepository<Associado, Long> {
+public interface ConveniadoRepository extends JpaRepository<Conveniado, Long> {
 
-    Page<Associado> findByNome(String nome, Pageable pageable);
-    Optional<Associado> findOneByCpf(String cpf);
+    Page<Conveniado> findByNome(String nome, Pageable pageable);
+    Optional<Conveniado> findOneByCpf(String cpf);
 
 }

@@ -1,7 +1,7 @@
 package br.com.gisa.conveniados.model;
 
-import br.com.gisa.conveniados.enums.SituacaoAssociadoEnum;
-import br.com.gisa.conveniados.dto.model.AssociadoDTO;
+import br.com.gisa.conveniados.enums.SituacaoConveniadoEnum;
+import br.com.gisa.conveniados.dto.model.ConveniadoDTO;
 import br.com.gisa.conveniados.enums.TipoPlanoEnum;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -19,7 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Associado implements Serializable {
+public class Conveniado implements Serializable {
 
     private @Id @GeneratedValue Long id;
     private String nome;
@@ -34,12 +34,12 @@ public class Associado implements Serializable {
     private String uf;
     private String complemento;
     private String cep;
-    private SituacaoAssociadoEnum situacao;
+    private SituacaoConveniadoEnum situacao;
     private TipoPlanoEnum tipoPlano;
     private Date dataCadastro;
     private Date dataAtualizacao;
 
-    public AssociadoDTO convertEntityToDTO() {
-        return new ModelMapper().map(this, AssociadoDTO.class);
+    public ConveniadoDTO convertEntityToDTO() {
+        return new ModelMapper().map(this, ConveniadoDTO.class);
     }
 }
