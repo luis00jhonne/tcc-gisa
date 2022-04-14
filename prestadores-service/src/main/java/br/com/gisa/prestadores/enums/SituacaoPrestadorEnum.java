@@ -1,6 +1,6 @@
 package br.com.gisa.prestadores.enums;
 
-public enum SituacaoAssociadoEnum {
+public enum SituacaoPrestadorEnum {
 
     ATIVO,
     SUSPENSO,

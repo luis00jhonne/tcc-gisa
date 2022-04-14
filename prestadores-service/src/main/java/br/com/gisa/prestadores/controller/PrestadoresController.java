@@ -3,11 +3,11 @@ package br.com.gisa.prestadores.controller;
 import br.com.gisa.prestadores.exceptions.CPFExistenteException;
 import br.com.gisa.prestadores.exceptions.InvalidUpdateException;
 import br.com.gisa.prestadores.exceptions.NotFoundException;
-import br.com.gisa.prestadores.model.Associado;
-import br.com.gisa.prestadores.enums.SituacaoAssociadoEnum;
-import br.com.gisa.prestadores.dto.model.AssociadoDTO;
+import br.com.gisa.prestadores.model.Prestador;
+import br.com.gisa.prestadores.enums.SituacaoPrestadorEnum;
+import br.com.gisa.prestadores.dto.model.PrestadorDTO;
 import br.com.gisa.prestadores.dto.response.Response;
-import br.com.gisa.prestadores.service.AssociadoService;
+import br.com.gisa.prestadores.service.PrestadorService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -33,30 +33,30 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Log4j2
 @CrossOrigin
 @RestController
-@RequestMapping("/prestadores/v1")
+@RequestMapping("/v1/prestadores")
 public class PrestadoresController {
 
-	private AssociadoService prestadoreService;
+	private PrestadorService prestadorService;
 
     @Autowired
-    public PrestadoresController(AssociadoService prestadoreService){
-        this.prestadoreService = prestadoreService;
+    public PrestadoresController(PrestadorService prestadoreService){
+        this.prestadorService = prestadoreService;
     }
 
     @ApiOperation(value = "Listar todos os prestadores")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna uma lista com prestadores, considerando os filtros"),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @GetMapping
-    public ResponseEntity<Response<List<AssociadoDTO>>> listarTodos(
+    public ResponseEntity<Response<List<PrestadorDTO>>> listarTodos(
             @RequestParam(required = false) String filterName,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int limit){
     	
-    	Response<List<AssociadoDTO>> response = new Response<>();
+    	Response<List<PrestadorDTO>> response = new Response<>();
     	
-    	Page<Associado> list = prestadoreService.findAll(page, limit, filterName);
+    	Page<Prestador> list = prestadorService.findAll(page, limit, filterName);
 		
-		List<AssociadoDTO> itemsDTO = new ArrayList<>();
+		List<PrestadorDTO> itemsDTO = new ArrayList<>();
 		if (list.hasContent()) {
 			list.stream().forEach(t -> itemsDTO.add(t.convertEntityToDTO()));
 			itemsDTO.stream().forEach(dto -> {
@@ -78,17 +78,17 @@ public class PrestadoresController {
 
     @ApiOperation(value = "Listar informações cadastrais de um prestador")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna as informações cadastrais do prestador especificado pelo id"),
-            @ApiResponse(code = 404, message = "Associado não encontrado."),
+            @ApiResponse(code = 404, message = "Prestador não encontrado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Response<AssociadoDTO>> listarPorId(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<Response<PrestadorDTO>> listarPorId(@PathVariable Long id) throws NotFoundException {
     	
-    	Response<AssociadoDTO> response = new Response<>();
-    	Associado trabalhador = prestadoreService.findById(id);
+    	Response<PrestadorDTO> response = new Response<>();
+    	Prestador prestador = prestadorService.findById(id);
 
-		AssociadoDTO dto = trabalhador.convertEntityToDTO();
+		PrestadorDTO dto = prestador.convertEntityToDTO();
     	
-    	createSelfLink(trabalhador, dto);
+    	createSelfLink(prestador, dto);
     	response.setData(dto);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -101,27 +101,25 @@ public class PrestadoresController {
     		@ApiResponse(code = 204, message = "Erro ao cadastrar o prestador."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @PostMapping
-    public ResponseEntity<Response<AssociadoDTO>> salvarAssociado(@Valid @RequestBody AssociadoDTO dto,  BindingResult result) throws NotFoundException, CPFExistenteException {
+    public ResponseEntity<Response<PrestadorDTO>> salvarPrestador(@Valid @RequestBody PrestadorDTO dto, BindingResult result) throws NotFoundException, CPFExistenteException {
 
-    	Response<AssociadoDTO> response = new Response<>();
+    	Response<PrestadorDTO> response = new Response<>();
 
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 
-		Optional<Associado> vehicleToFind = prestadoreService.findByCpf(dto.getCpf());
-		
-		if(vehicleToFind.isPresent()) {
+		if(prestadorService.findByCpf(dto.getCpf()).isPresent()) {
 			throw new CPFExistenteException("CPF já cadastrado.");
 		}
 
-		dto.setSituacao(SituacaoAssociadoEnum.SUSPENSO);
+		dto.setSituacao(SituacaoPrestadorEnum.ATIVO);
 		dto.setDataCadastro(new Date());
-		Associado trabalhadorToCreate = prestadoreService.save(dto.convertDTOToEntity());
+		Prestador prestador = prestadorService.save(dto.convertDTOToEntity());
 
-		AssociadoDTO dtoSaved = trabalhadorToCreate.convertEntityToDTO();
-		createSelfLink(trabalhadorToCreate, dtoSaved);
+		PrestadorDTO dtoSaved = prestador.convertEntityToDTO();
+		createSelfLink(prestador, dtoSaved);
 
 		response.setData(dtoSaved);
 		
@@ -135,62 +133,64 @@ public class PrestadoresController {
             @ApiResponse(code = 409, message = "Tentativa de atualização inválida."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @PutMapping(path="/{id}")
-    public ResponseEntity<Response<AssociadoDTO>> atualizarAssociado(@PathVariable("id") Long id, @Valid @RequestBody AssociadoDTO dto, BindingResult result) throws NotFoundException, InvalidUpdateException {
+    public ResponseEntity<Response<PrestadorDTO>> atualizarPrestador(@PathVariable("id") Long id, @Valid @RequestBody PrestadorDTO dto, BindingResult result) throws NotFoundException, InvalidUpdateException {
 
-    	Response<AssociadoDTO> response = new Response<>();
+    	Response<PrestadorDTO> response = new Response<>();
 
 		if (result.hasErrors()) {
 			result.getAllErrors().forEach(error -> response.addErrorMsgToResponse(error.getDefaultMessage()));
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		Associado trabalhadorFind = prestadoreService.findById(id);
-		if (!trabalhadorFind.getId().equals(dto.getId()) ) {
+		Prestador prestadorFind = prestadorService.findById(id);
+		if (!prestadorFind.getId().equals(dto.getId()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o id do cadastro = " + dto.getId());
 		}
 		
-		if (!trabalhadorFind.getCpf().equals(dto.getCpf()) ) {
+		if (!prestadorFind.getCpf().equals(dto.getCpf()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o CPF do cadastro =" + dto.getCpf());
 		}
 
+		dto.setDataCadastro(prestadorFind.getDataCadastro());
+		dto.setSituacao(prestadorFind.getSituacao());
 		dto.setDataAtualizacao(new Date());
-		Associado trabalhadorUpdate = prestadoreService.save(dto.convertDTOToEntity());
+		Prestador prestadorUpdate = prestadorService.save(dto.convertDTOToEntity());
 		
-		AssociadoDTO itemDTO = trabalhadorUpdate.convertEntityToDTO();
-		createSelfLink(trabalhadorUpdate, itemDTO);
+		PrestadorDTO itemDTO = prestadorUpdate.convertEntityToDTO();
+		createSelfLink(prestadorUpdate, itemDTO);
 		response.setData(itemDTO);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Inativar o cadastro de um prestador")
+    @ApiOperation(value = "Deletar o cadastro de um prestador")
     @ApiResponses(value = { @ApiResponse(code = 204, message = "Prestador inativado com sucesso"),
             @ApiResponse(code = 400, message = "Requisição incorreta."),
-            @ApiResponse(code = 404, message = "Associado não encontrado."),
+            @ApiResponse(code = 404, message = "Prestador não encontrado."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<Response<String>> inativarAssociado(@PathVariable("id") Long id) throws NotFoundException{
+    public ResponseEntity<Response<String>> deletarPrestador(@PathVariable("id") Long id) throws NotFoundException{
 
     	Response<String> response = new Response<>();
-		Associado trabalhador = prestadoreService.findById(id);
+		Prestador prestador = prestadorService.findById(id);
 		
-		prestadoreService.deleteById(trabalhador.getId());
-		response.setData("Prestador de id = " + trabalhador.getId() + " deletado com sucesso.");
+		prestadorService.deleteById(prestador.getId());
+		response.setData("Prestador de id = " + prestador.getId() + " deletado com sucesso.");
 		
 		return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
     }
     
-    private void createSelfLink(Associado trabalhador, AssociadoDTO trabalhadorDTO) {
-		Link selfLink = WebMvcLinkBuilder.linkTo(PrestadoresController.class).slash(trabalhador.getId()).withSelfRel();
-		trabalhadorDTO.add(selfLink);
+    private void createSelfLink(Prestador prestador, PrestadorDTO prestadorDTO) {
+		Link selfLink = WebMvcLinkBuilder.linkTo(PrestadoresController.class).slash(prestador.getId()).withSelfRel();
+		prestadorDTO.add(selfLink);
 	}
 	
-	private void createSelfLinkInCollections(final AssociadoDTO trabalhadorDTO)
+	private void createSelfLinkInCollections(final PrestadorDTO prestadorDTO)
 			throws NotFoundException {
 		Link selfLink = linkTo(methodOn(PrestadoresController.class)
-				.listarPorId(trabalhadorDTO.getId()))
+				.listarPorId(prestadorDTO.getId()))
 				.withSelfRel().expand();
-		trabalhadorDTO.add(selfLink);
+		prestadorDTO.add(selfLink);
 	
 	}
 }

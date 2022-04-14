@@ -1,6 +1,6 @@
 package br.com.gisa.prestadores.repository;
 
-import br.com.gisa.prestadores.model.Associado;
+import br.com.gisa.prestadores.model.Prestador;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +11,9 @@ import java.util.Optional;
 
 @Repository
 @RepositoryRestResource(exported = false)
-public interface AssociadoRepository extends JpaRepository<Associado, Long> {
+public interface PrestadorRepository extends JpaRepository<Prestador, Long> {
 
-    Page<Associado> findByNome(String nome, Pageable pageable);
-    Optional<Associado> findOneByCpf(String cpf);
+    Page<Prestador> findByNome(String nome, Pageable pageable);
+    Optional<Prestador> findOneByCpf(String cpf);
 
 }

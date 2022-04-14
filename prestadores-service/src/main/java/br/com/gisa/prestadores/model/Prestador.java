@@ -1,8 +1,7 @@
 package br.com.gisa.prestadores.model;
 
-import br.com.gisa.prestadores.enums.SituacaoAssociadoEnum;
-import br.com.gisa.prestadores.dto.model.AssociadoDTO;
-import br.com.gisa.prestadores.enums.TipoPlanoEnum;
+import br.com.gisa.prestadores.enums.SituacaoPrestadorEnum;
+import br.com.gisa.prestadores.dto.model.PrestadorDTO;
 import lombok.*;
 import org.modelmapper.ModelMapper;
 
@@ -14,12 +13,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Entity(name="associados")
+@Entity(name="prestadores")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class Associado implements Serializable {
+public class Prestador implements Serializable {
 
     private @Id @GeneratedValue Long id;
     private String nome;
@@ -34,12 +33,12 @@ public class Associado implements Serializable {
     private String uf;
     private String complemento;
     private String cep;
-    private SituacaoAssociadoEnum situacao;
-    private TipoPlanoEnum tipoPlano;
+    private SituacaoPrestadorEnum situacao;
+    private String especialidade;
     private Date dataCadastro;
     private Date dataAtualizacao;
 
-    public AssociadoDTO convertEntityToDTO() {
-        return new ModelMapper().map(this, AssociadoDTO.class);
+    public PrestadorDTO convertEntityToDTO() {
+        return new ModelMapper().map(this, PrestadorDTO.class);
     }
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Data
-@Entity(name="associados")
+@Entity(name="conveniados")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

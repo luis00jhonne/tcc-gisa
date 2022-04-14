@@ -1,6 +1,6 @@
 package br.com.gisa.prestadores.integration;
 
-import br.com.gisa.prestadores.dto.model.AssociadoDTO;
+import br.com.gisa.prestadores.dto.model.PrestadorDTO;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TrabalhadorApiIntegrationTest {
+public class PrestadorApiIntegrationTest {
 
 	@LocalServerPort
 	private int port;
@@ -41,7 +41,7 @@ public class TrabalhadorApiIntegrationTest {
 	@Order(1)
 	public void testCreateTrabalhadorWithId10() {
 
-		AssociadoDTO dto = new AssociadoDTO();
+		PrestadorDTO dto = new PrestadorDTO();
 		dto.setId(10L);
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-00");
@@ -50,7 +50,7 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
-		final HttpEntity<AssociadoDTO> entity = new HttpEntity<>(dto);
+		final HttpEntity<PrestadorDTO> entity = new HttpEntity<>(dto);
 
 		ResponseEntity<String> responseEntity = this.restTemplate
 				.exchange("http://localhost:" + port + endpoint, HttpMethod.POST, entity, String.class);
@@ -62,7 +62,7 @@ public class TrabalhadorApiIntegrationTest {
 	@Order(2)
 	public void testCreateTrabalhadorWithId20() {
 
-		AssociadoDTO dto = new AssociadoDTO();
+		PrestadorDTO dto = new PrestadorDTO();
 		dto.setId(20L);
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-11");
@@ -71,7 +71,7 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
-		final HttpEntity<AssociadoDTO> entity = new HttpEntity<>(dto);
+		final HttpEntity<PrestadorDTO> entity = new HttpEntity<>(dto);
 
 		ResponseEntity<String> responseEntity = this.restTemplate
 				.exchange("http://localhost:" + port + endpoint, HttpMethod.POST, entity, String.class);

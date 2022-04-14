@@ -43,7 +43,7 @@ public class ConveniadoServiceImpl implements ConveniadoService {
     @Override
     public Conveniado findById(Long id) throws NotFoundException {
         return conveniadoRepository.findById(
-                id).orElseThrow(() -> new NotFoundException("Trabalhador com id = " + id + " nao encontrado"));
+                id).orElseThrow(() -> new NotFoundException("Conveniado com id = " + id + " nao encontrado"));
     }
 
     public Conveniado save(Conveniado conveniado){

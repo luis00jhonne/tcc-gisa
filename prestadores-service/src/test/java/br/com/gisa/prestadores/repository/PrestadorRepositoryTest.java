@@ -1,6 +1,6 @@
 package br.com.gisa.prestadores.repository;
 
-import br.com.gisa.prestadores.model.Associado;
+import br.com.gisa.prestadores.model.Prestador;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -20,17 +20,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class })
-public class AssociadoRepositoryTest {
+public class PrestadorRepositoryTest {
 	
 	@Autowired
-	private AssociadoRepository repository;
+	private PrestadorRepository repository;
 	
 	private static final String CPF = "123.456.789-00";
 	
 	@BeforeAll
 	private void setUp() {
 
-		Associado entity = getTrabalhador("123.456.789-00");
+		Prestador entity = getTrabalhador("123.456.789-00");
 
 		repository.save(entity);
 	}
@@ -39,8 +39,8 @@ public class AssociadoRepositoryTest {
 	@Order(1)
 	public void testSave() {
 		
-		Associado entity = getTrabalhador("123.456.789-11");
-		Associado response = repository.save(entity);
+		Prestador entity = getTrabalhador("123.456.789-11");
+		Prestador response = repository.save(entity);
 		assertNotNull(response);
 	}
 	
@@ -48,7 +48,7 @@ public class AssociadoRepositoryTest {
 	@Order(2)
 	public void testFindByCpf(){
 		
-		Optional<Associado> response = repository.findOneByCpf(CPF);
+		Optional<Prestador> response = repository.findOneByCpf(CPF);
 		assertFalse(response.isEmpty());
 	}
 	
@@ -57,8 +57,8 @@ public class AssociadoRepositoryTest {
 		repository.deleteAll();
 	}
 
-	private Associado getTrabalhador(String cpf) {
-		Associado entity = new Associado();
+	private Prestador getTrabalhador(String cpf) {
+		Prestador entity = new Prestador();
 		entity.setNome("Trabalhador");
 		entity.setCpf(cpf);
 		entity.setEmail("email@email.com");

@@ -1,7 +1,7 @@
 package br.com.gisa.prestadores.dto.model;
 
-import br.com.gisa.prestadores.model.Associado;
-import br.com.gisa.prestadores.enums.SituacaoAssociadoEnum;
+import br.com.gisa.prestadores.model.Prestador;
+import br.com.gisa.prestadores.enums.SituacaoPrestadorEnum;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.modelmapper.ModelMapper;
@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
+public class PrestadorDTO extends RepresentationModel<PrestadorDTO> {
 
     private Long id;
 
@@ -46,11 +46,11 @@ public class AssociadoDTO extends RepresentationModel<AssociadoDTO> {
     private String complemento;
     private String cep;
     private String localizacao;
-    private SituacaoAssociadoEnum situacao;
+    private SituacaoPrestadorEnum situacao;
     private Date dataCadastro;
     private Date dataAtualizacao;
 
-    public Associado convertDTOToEntity() {
-        return new ModelMapper().map(this, Associado.class);
+    public Prestador convertDTOToEntity() {
+        return new ModelMapper().map(this, Prestador.class);
     }
 }
