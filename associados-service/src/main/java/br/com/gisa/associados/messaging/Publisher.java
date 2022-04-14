@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Publisher {
 
-    //@Autowired
     private final AmqpTemplate queueSender;
 
     @Autowired

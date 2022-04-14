@@ -34,7 +34,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Log4j2
 @CrossOrigin
 @RestController
-@RequestMapping("/associados/v1")
+@RequestMapping("/v1/associados")
 public class AssociadosController {
 
 	private AssociadoService associadoService;
@@ -135,20 +135,23 @@ public class AssociadosController {
 			return ResponseEntity.badRequest().body(response);
 		}
 		
-		Associado trabalhadorFind = associadoService.findById(id);
-		if (!trabalhadorFind.getId().equals(dto.getId()) ) {
+		Associado associadoFind = associadoService.findById(id);
+		if (!associadoFind.getId().equals(dto.getId()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o id do cadastro = " + dto.getId());
 		}
 		
-		if (!trabalhadorFind.getCpf().equals(dto.getCpf()) ) {
+		if (!associadoFind.getCpf().equals(dto.getCpf()) ) {
 			throw new InvalidUpdateException("Não foi possível alterar o CPF do cadastro =" + dto.getCpf());
 		}
 
+		dto.setDataCadastro(associadoFind.getDataCadastro());
+		dto.setSituacao(associadoFind.getSituacao());
 		dto.setDataAtualizacao(new Date());
-		Associado trabalhadorUpdate = associadoService.save(dto.convertDTOToEntity());
+
+		Associado associadoUpdate = associadoService.save(dto.convertDTOToEntity());
 		
-		AssociadoDTO itemDTO = trabalhadorUpdate.convertEntityToDTO();
-		createSelfLink(trabalhadorUpdate, itemDTO);
+		AssociadoDTO itemDTO = associadoUpdate.convertEntityToDTO();
+		createSelfLink(associadoUpdate, itemDTO);
 		response.setData(itemDTO);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -188,9 +191,9 @@ public class AssociadosController {
 		return itemsDTO;
 	}
     
-    private void createSelfLink(Associado trabalhador, AssociadoDTO trabalhadorDTO) {
-		Link selfLink = WebMvcLinkBuilder.linkTo(AssociadosController.class).slash(trabalhador.getId()).withSelfRel();
-		trabalhadorDTO.add(selfLink);
+    private void createSelfLink(Associado associado, AssociadoDTO associadoDTO) {
+		Link selfLink = WebMvcLinkBuilder.linkTo(AssociadosController.class).slash(associado.getId()).withSelfRel();
+		associadoDTO.add(selfLink);
 	}
 	
 	private void createSelfLinkInCollections(final AssociadoDTO trabalhadorDTO)

@@ -1,6 +1,6 @@
-package br.com.gisa.acessoaolegado.integration;
+package br.com.gisa.associados.integration;
 
-import br.com.gisa.acessoaolegado.dto.model.AssociadoDTO;
+import br.com.gisa.associados.dto.model.AssociadoDTO;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TrabalhadorApiIntegrationTest {
+public class AssociadoApiIntegrationTest {
 
 	@LocalServerPort
 	private int port;
@@ -46,7 +46,6 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-00");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
@@ -67,7 +66,6 @@ public class TrabalhadorApiIntegrationTest {
 		dto.setNome("Trabalhador");
 		dto.setCpf("123.456.789-11");
 		dto.setEmail("email@email.com");
-		dto.setEspecialidade("Pedreiro");
 		dto.setCelular("(98) 98123-9090");
 
 		// Create a new HttpEntity
