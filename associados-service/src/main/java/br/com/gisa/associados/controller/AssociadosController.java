@@ -121,7 +121,7 @@ public class AssociadosController {
 
     @ApiOperation(value = "Atualizar o cadastro do associado")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Cadastro do associado atualizado com sucesso."),
-            @ApiResponse(code = 400, message = "Os dados da requisição estão incompletos ou incorretos.."),
+            @ApiResponse(code = 400, message = "Os dados da requisição estão incompletos ou incorretos."),
             @ApiResponse(code = 404, message = "Associado não encontrado."),
             @ApiResponse(code = 409, message = "Tentativa de atualização inválida."),
             @ApiResponse(code = 500, message = "Houve uma exceção no sistema."), })

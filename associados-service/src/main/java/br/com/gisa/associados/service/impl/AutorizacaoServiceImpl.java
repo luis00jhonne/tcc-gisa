@@ -1,5 +1,6 @@
 package br.com.gisa.associados.service.impl;
 
+import br.com.gisa.associados.dto.model.AutorizacaoExameConsultaDTO;
 import br.com.gisa.associados.enums.SituacaoAutorizacaoEnum;
 import br.com.gisa.associados.exceptions.NotFoundException;
 import br.com.gisa.associados.messaging.Publisher;
@@ -31,11 +32,6 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
         this.publisher = publisher;
     }
 
-    public AutorizacaoExameConsulta save(AutorizacaoExameConsulta associado){
-
-        return autorizacaoRepository.save(associado);
-    }
-
     @Override
     public AutorizacaoExameConsulta autorizarExameConsulta(AutorizacaoExameConsulta autorizacaoExameConsulta) {
 
@@ -53,4 +49,16 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
         return autorizacaoRepository.findOneByCodigoAutorizacao(codigoAutorizacao)
                 .orElseThrow(() -> new NotFoundException("Autorização não encontrada"));
     }
+
+    @Override
+    public void processarResultadoConsulta(String payload) {
+        Gson gson = new Gson();
+        AutorizacaoExameConsultaDTO autorizacaoExameConsultaDTO = gson.fromJson(payload, AutorizacaoExameConsultaDTO.class);
+        autorizacaoRepository.save(autorizacaoExameConsultaDTO.convertDTOToEntity());
+    }
+
+    private AutorizacaoExameConsulta save(AutorizacaoExameConsulta associado){
+        return autorizacaoRepository.save(associado);
+    }
+
 }

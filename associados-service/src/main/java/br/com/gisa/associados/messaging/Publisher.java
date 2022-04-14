@@ -7,10 +7,17 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Publisher {
+
+    @Value("${gisa.exchange.name}")
+    private String exchangeName;
+
+    @Value("${gisa.autorizacao.solicitacao.queue}")
+    private String queueName;
 
     private final AmqpTemplate queueSender;
 
@@ -21,7 +28,7 @@ public class Publisher {
 
     public void publishInQueue(AutorizacaoExameConsulta autorizacaoExameConsulta){
         Gson gson = new Gson();
-        queueSender.convertAndSend("gisa-exchange", "gisa-autorizacao-solicitacao",  gson.toJson(autorizacaoExameConsulta));
+        queueSender.convertAndSend(exchangeName, queueName, gson.toJson(autorizacaoExameConsulta));
     }
 
 }

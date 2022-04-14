@@ -7,5 +7,5 @@ public interface AutorizacaoService {
 
     AutorizacaoExameConsulta autorizarExameConsulta(AutorizacaoExameConsulta autorizacaoExameConsulta);
     AutorizacaoExameConsulta consultarExameConsulta(String codigoAutorizacao) throws NotFoundException;
-    AutorizacaoExameConsulta save(AutorizacaoExameConsulta autorizacaoExameConsulta);
+    void processarResultadoConsulta(String payload);
 }
