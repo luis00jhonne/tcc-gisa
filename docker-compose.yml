@@ -1,16 +1,101 @@
 version: '3'
-services:
-    message-server:
-        container_name: prestadores-service
-        build:
-            context: prestadores-service
-            dockerfile: Dockerfile
-        image: prestadores-service:1.0.0
-        ports:
-            - 8081:8080
-        networks:
-            - poc-gisa-net
 
-networks:
-    poc-gisa-net:
-        driver: bridge
+services:
+
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: database
+    volumes:
+      - gisa-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  prestadores:
+    container_name: prestadores-service
+    build: ./prestadores-service
+    ports:
+      - 8081:8080
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      - DB_SERVER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  conveniados:
+    container_name: conveniados-service
+    build: ./conveniados-service
+    ports:
+      - 8082:8080
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      - DB_SERVER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  associados:
+    container_name: associados-service
+    build: ./associados-service
+    ports:
+      - 8083:8080
+    depends_on:
+      - postgres
+      - rabbitmq
+    links:
+      - postgres
+      - rabbitmq
+    environment:
+      - DB_SERVER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
+      - RABBITMQ_HOST=rabbitmq
+
+  acessoaolegado:
+    container_name: acessoaolegado-service
+    build: ./acessoaolegado-service
+    ports:
+      - 8084:8080
+    depends_on:
+      - postgres
+      - rabbitmq
+    links:
+      - postgres
+      - rabbitmq
+    environment:
+      - DB_SERVER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
+      - RABBITMQ_HOST=rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    
+volumes:
+  gisa-data:
