@@ -1,98 +1,9 @@
-networks:
- kong-net:
-  driver: bridge
-
 version: '3'
 
 services:
-  #######################################
-  # Kong database migration
-  #######################################
-  kong-migration:
-    image: kong:latest
-    command: "kong migrations bootstrap"
-    networks:
-      - kong-net
-    restart: on-failure
-    environment:
-      KONG_PG_HOST: postgres
-      KONG_PG_USER: postgres
-      KONG_PG_PASSWORD: postgres 
-    links:
-      - postgres
-    depends_on:
-      - postgres
-
-  #######################################
-  # Kong: The API Gateway
-  #######################################
-  kong:
-    image: kong:latest
-    restart: always
-    networks:
-      - kong-net
-    environment:
-      KONG_PG_HOST: postgres
-      KONG_PG_USER: postgres
-      KONG_PG_PASSWORD: postgres 
-      KONG_PROXY_LISTEN: 0.0.0.0:8000
-      KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
-      KONG_ADMIN_LISTEN: 0.0.0.0:8001
-    depends_on:
-      - kong-migration
-      - postgres
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://kong:8001"]
-      interval: 5s
-      timeout: 2s
-      retries: 15
-    ports:
-      - "8001:8001"
-      - "8000:8000"
-
-  #######################################
-  # Konga database prepare
-  #######################################
-  konga-prepare:
-    image: pantsel/konga:next
-    command: "-c prepare -a postgres -u postgresql://postgres@postgres:5432/konga_db"
-    networks:
-      - kong-net
-    restart: on-failure
-    links:
-      - postgres
-    depends_on:
-      - postgres
-    environment:
-      KONG_PG_HOST: postgres
-      KONG_PG_USER: postgres
-      KONG_PG_PASSWORD: postgres
-
-  #######################################
-  # Konga: Kong GUI
-  #######################################
-  konga:
-    image: pantsel/konga:next
-    restart: always
-    networks:
-      - kong-net
-    environment:
-      DB_ADAPTER: postgres
-      DB_HOST: postgres
-      DB_USER: postgres
-      TOKEN_SECRET: km1GUr4RkcQD7DewhJPNXrCuZwcKmqjb
-      DB_DATABASE: konga_db
-      NODE_ENV: production
-    depends_on:
-      - postgres
-    ports:
-      - "1337:1337"
-
-  postgres:
+  gisa-database:
     image: postgres:14.1-alpine
-    container_name: database
-    networks:
-      - kong-net
+    container_name: gisa-database
     volumes:
       - gisa-data:/var/lib/postgresql/data
     ports:
@@ -108,11 +19,11 @@ services:
     ports:
       - 8081:8080
     depends_on:
-      - postgres
+      - gisa-database
     links:
-      - postgres
+      - gisa-database
     environment:
-      - DB_SERVER=postgres
+      - DB_SERVER=gisa-database
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -123,11 +34,11 @@ services:
     ports:
       - 8082:8080
     depends_on:
-      - postgres
+      - gisa-database
     links:
-      - postgres
+      - gisa-database
     environment:
-      - DB_SERVER=postgres
+      - DB_SERVER=gisa-database
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -138,13 +49,13 @@ services:
     ports:
       - 8083:8080
     depends_on:
-      - postgres
+      - gisa-database
       - rabbitmq
     links:
-      - postgres
+      - gisa-database
       - rabbitmq
     environment:
-      - DB_SERVER=postgres
+      - DB_SERVER=gisa-database
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -158,13 +69,13 @@ services:
     ports:
       - 8084:8080
     depends_on:
-      - postgres
+      - gisa-database
       - rabbitmq
     links:
-      - postgres
+      - gisa-database
       - rabbitmq
     environment:
-      - DB_SERVER=postgres
+      - DB_SERVER=gisa-database
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -184,6 +95,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
-    
+
+
 volumes:
   gisa-data:
+
+networks:
+ kong-net:
+  driver: bridge
