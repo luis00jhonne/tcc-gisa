@@ -1,4 +1,4 @@
-package br.com.gisa.associados.config;
+package br.com.gisa.acessoaolegado.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -16,10 +16,10 @@ public class RabbitConfig {
     @Value("${gisa.exchange.name}")
     private String exchangeName;
 
-    @Value("${gisa.autorizacao.solicitacao.queue}")
+    @Value("${gisa.autorizacao.resultado.queue}")
     private String queueName;
 
-    @Value("${gisa.autorizacao.solicitacao.routingKey}")
+    @Value("${gisa.autorizacao.resultado.routingKey}")
     private String routingKey;
 
     @Bean()
@@ -34,7 +34,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    Binding bindingQueueSolicitacao(Queue queue, DirectExchange exchange) {
+    Binding bindingQueueResultado(Queue queue, DirectExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 }

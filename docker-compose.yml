@@ -96,9 +96,9 @@ services:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
 
-
 volumes:
   gisa-data:
+  kong-data:
 
 networks:
  kong-net:
