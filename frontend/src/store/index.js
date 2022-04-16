@@ -5,13 +5,9 @@ import Vuex from "vuex";
 import layout from '../modules/shareds/store/layout'
 import menu from '../modules/shareds/store/menu'
 import accounts from "../modules/accounts/store";
-import companies from "../modules/companies/store";
 import customers from "../modules/customers/store";
-import home from "../modules/home/store";
-import invoices from "../modules/invoices/store";
+import home from "../modules/home/store"; 
 import shareds from "../modules/shareds/store";
-import tickets from "../modules/tickets/store";
-import users from "../modules/users/store";
 
 Vue.use(Vuex);
 
@@ -20,13 +16,9 @@ export default new Vuex.Store({
     layout,
     menu,
     accounts: accounts,
-    companies: companies,
     customers: customers,
     home: home,
-    invoices: invoices,
     shareds: shareds,
-    tickets: tickets,
-    users: users,
   },
   state: {
     isLoading: true,
