@@ -1,5 +1,5 @@
 -- criar banco
- docker run -d --name kong-database \
+ sudo docker run -d --name kong-database \
   --network=poc-gisa-net \
   -p 5432:5432 \
   -e "POSTGRES_USER=kong" \
@@ -8,7 +8,7 @@
   postgres:9.6
 
 -- atualizar banco
-docker run --rm --network poc-gisa-net \
+sudo docker run --rm --network poc-gisa-net \
    --link kong-database:kong-database \
   -e "KONG_DATABASE=postgres" \
   -e "KONG_PG_HOST=kong-database" \
@@ -18,7 +18,7 @@ docker run --rm --network poc-gisa-net \
 
 
 --subir Kong
-docker run -d --name kong-gateway \
+sudo docker run -d --name kong-gateway \
   --network=poc-gisa-net \
   -e "KONG_DATABASE=postgres" \
   -e "KONG_PG_HOST=kong-database" \
