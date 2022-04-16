@@ -1,0 +1,92 @@
+/**=====================
+     32. pagination CSS Start
+==========================**/
+/*test Nav bar color */
+$page-name:theme,
+primary,
+secondary,
+success,
+danger,
+info,
+dark,
+warning;
+$page-color:var(--theme-deafult),
+var(--theme-deafult),
+$secondary-color,
+$success-color,
+$danger-color,
+$info-color,
+$dark-color,
+$warning-color;
+
+@each $var in $page-name {
+  $i: index($page-name, $var);
+
+  .pagination-#{$var} {
+    .page-item {
+      .page-link {
+        color: nth($page-color, $i) !important;
+      }
+
+      &.active {
+        .page-link {
+          color: $white !important;
+          background-color: nth($page-color, $i) !important;
+          border-color: nth($page-color, $i);
+        }
+      }
+    }
+  }
+}
+
+/**=====================
+     32. pagination CSS Ends
+==========================**/
+
+.campo-empresa {
+  border-top: 1px solid #C2CFE0;
+  border-bottom: 1px solid #C2CFE0;
+  padding: 35px 5% 30px 5%;
+  max-width: 820px;
+  margin: 0 auto;
+ 
+  p {
+    color: #595959;
+    font-size: 15px;
+  }
+
+  .link-envio{
+    a{
+      color: #1E6BEB;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .row {
+    margin-bottom: 18px;
+    .label-empresa {
+      padding-top: 5px;
+      text-align: right;
+      height: 100%;
+      font-weight: bold;
+      color: #595959;
+      font-size: 15px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .campo-empresa {
+    .row {
+      .label-empresa {
+        text-align: left;
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
