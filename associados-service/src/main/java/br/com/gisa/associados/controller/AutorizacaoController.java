@@ -59,11 +59,10 @@ public class AutorizacaoController {
 			throw new NotFoundException("CPF do Associado não encontrado.");
 		}
 
-		dto.setAssociado(associadoEncontrado.get());
+		dto.setAssociado(associadoEncontrado.get().convertEntityToDTO());
 		AutorizacaoExameConsulta autorizacao = autorizacaoService.autorizarExameConsulta(dto.convertDTOToEntity());
 
 		AutorizacaoExameConsultaDTO autorizacaoDtoRetorno = autorizacao.convertEntityToDTO();
-		createSelfLink(autorizacao, autorizacaoDtoRetorno);
 		response.setData(autorizacaoDtoRetorno);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -81,19 +80,10 @@ public class AutorizacaoController {
 
 		AutorizacaoExameConsultaDTO dto = autorizacao.convertEntityToDTO();
 
-		createSelfLink(autorizacao, dto);
 		response.setData(dto);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}
     
-    private void createSelfLink(AutorizacaoExameConsulta entity, AutorizacaoExameConsultaDTO dto) {
-		Link selfLink = WebMvcLinkBuilder
-				.linkTo(AutorizacaoController.class)
-				.slash(entity.getCodigoAutorizacao())
-				.withSelfRel();
-
-		dto.add(selfLink);
-	}
 }

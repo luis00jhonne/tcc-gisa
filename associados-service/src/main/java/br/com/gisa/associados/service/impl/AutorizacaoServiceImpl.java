@@ -54,11 +54,23 @@ public class AutorizacaoServiceImpl implements AutorizacaoService {
     public void processarResultadoConsulta(String payload) {
         Gson gson = new Gson();
         AutorizacaoExameConsultaDTO autorizacaoExameConsultaDTO = gson.fromJson(payload, AutorizacaoExameConsultaDTO.class);
-        autorizacaoRepository.save(autorizacaoExameConsultaDTO.convertDTOToEntity());
+
+        try{
+            AutorizacaoExameConsulta autorizacaoFind = consultarExameConsulta(autorizacaoExameConsultaDTO.getCodigoAutorizacao());
+            autorizacaoFind.setSituacao(autorizacaoExameConsultaDTO.getSituacao());
+            autorizacaoFind.setDataAutorizacao(autorizacaoExameConsultaDTO.getDataAutorizacao());
+
+            autorizacaoRepository.save(autorizacaoFind);
+
+            autorizacaoFind.getAssociado().setHistorico(null);
+
+        } catch (Exception e){
+            System.out.println("Erro ao processar o resultado da autorização: " + autorizacaoExameConsultaDTO.getCodigoAutorizacao());
+        }
     }
 
-    private AutorizacaoExameConsulta save(AutorizacaoExameConsulta associado){
-        return autorizacaoRepository.save(associado);
+    private AutorizacaoExameConsulta save(AutorizacaoExameConsulta autorizacao){
+        return autorizacaoRepository.save(autorizacao);
     }
 
 }

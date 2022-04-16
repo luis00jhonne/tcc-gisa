@@ -23,10 +23,10 @@ import java.util.Date;
 public class AutorizacaoExameConsultaDTO extends RepresentationModel<AutorizacaoExameConsultaDTO> {
 
     @NotNull(message = "O associado deve ser informado.")
-    private Associado associado;
+    private AssociadoDTO associado;
 
     @NotNull(message = "O exame/consulta deve ser informado.")
-    private ExameConsulta exameConsulta;
+    private ExameConsultaDTO exameConsulta;
 
     private String codigoAutorizacao;
 
