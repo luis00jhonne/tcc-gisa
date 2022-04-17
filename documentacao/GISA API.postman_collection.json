@@ -7,7 +7,1485 @@
 	"item": [
 		{
 			"name": "API Gateway",
-			"item": [],
+			"item": [
+				{
+					"name": "Associados",
+					"item": [
+						{
+							"name": "Listar Todos Associados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/associados?filter=&limit=10&page=0",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"associados"
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": ""
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Todos Associados",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/associados?filter=&limit=10&page=0",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"associados"
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": ""
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:52:39 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "94"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "1"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"id\": 4,\n            \"nome\": \"Associado 2\",\n            \"cpf\": \"12345678911\",\n            \"email\": \"email@email.com\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"SUSPENSO\",\n            \"tipoPlano\": \"ENFERMARIA\",\n            \"dataCadastro\": 1650138642438,\n            \"dataAtualizacao\": 1650138721830,\n            \"historico\": [],\n            \"links\": [\n                {\n                    \"rel\": \"self\",\n                    \"href\": \"http://192.168.100.13:8083/v1/associados/4\"\n                }\n            ]\n        }\n    ],\n    \"page\": {\n        \"sort\": {\n            \"sorted\": false,\n            \"empty\": true,\n            \"unsorted\": true\n        },\n        \"pageSize\": 10,\n        \"pageNumber\": 0,\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalPages\": 1,\n    \"totalElements\": 1\n}"
+								}
+							]
+						},
+						{
+							"name": "Listar Associado Por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/associados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"associados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Associado Por Id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/associados/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"associados",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:52:29 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "14"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 4,\n        \"nome\": \"Associado 2\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@email.com\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"SUSPENSO\",\n        \"tipoPlano\": \"ENFERMARIA\",\n        \"dataCadastro\": 1650138642438,\n        \"dataAtualizacao\": 1650138721830,\n        \"historico\": [],\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8083/v1/associados/4\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Cadastrar Associado",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cpf\": \"12345678911\",\n    \"nome\": \"Associado 1\",\n    \"tipoPlano\": \"ENFERMARIA\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/associados",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"associados"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cadastrar Associado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"cpf\": \"12345678911\",\n    \"nome\": \"Associado 1\",\n    \"tipoPlano\": \"ENFERMARIA\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/associados",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"associados"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:50:42 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "214"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 4,\n        \"nome\": \"Associado 1\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@email.com\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"SUSPENSO\",\n        \"tipoPlano\": \"ENFERMARIA\",\n        \"dataCadastro\": 1650138642438,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8083/v1/associados/4\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Atualizar Cadastro Associado",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\n            \"id\": 4,\n            \"nome\": \"Associado 2\",\n            \"cpf\": \"12345678911\",\n            \"email\": \"email@email.com\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"SUSPENSO\",\n            \"tipoPlano\": \"ENFERMARIA\",\n            \"dataCadastro\": 1649637773533,\n            \"historico\": [],\n            \"links\": [\n                {\n                    \"rel\": \"self\",\n                    \"href\": \"http://localhost:8080/associados/v1/2\"\n                }\n            ]\n        }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/associados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"associados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Atualizar Cadastro Associado",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": " {\n            \"id\": 4,\n            \"nome\": \"Associado 2\",\n            \"cpf\": \"12345678911\",\n            \"email\": \"email@email.com\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"SUSPENSO\",\n            \"tipoPlano\": \"ENFERMARIA\",\n            \"dataCadastro\": 1649637773533,\n            \"historico\": [],\n            \"links\": [\n                {\n                    \"rel\": \"self\",\n                    \"href\": \"http://localhost:8080/associados/v1/2\"\n                }\n            ]\n        }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/associados/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"associados",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "4"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:52:01 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "71"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "1"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 4,\n        \"nome\": \"Associado 2\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@email.com\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"SUSPENSO\",\n        \"tipoPlano\": \"ENFERMARIA\",\n        \"dataCadastro\": 1650138642438,\n        \"dataAtualizacao\": 1650138721830,\n        \"historico\": [],\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8083/v1/associados/4\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Inativar Cadastro Associado",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/associados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"associados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Autorização",
+					"item": [
+						{
+							"name": "Autorização de Exames/Consulta",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"associado\": {\n        \"cpf\": \"12345678911\"\n    },\n    \"exameConsulta\": {\n        \"codigo\": \"CONS002\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/autorizacao",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"autorizacao"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Autorização de Exames/Consulta",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"associado\": {\n        \"cpf\": \"12345678911\"\n    },\n    \"exameConsulta\": {\n        \"codigo\": \"CONS001\"\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/autorizacao",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"autorizacao"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:54:13 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "78"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"associado\": {\n            \"id\": 4,\n            \"nome\": \"Associado 2\",\n            \"cpf\": \"12345678911\",\n            \"email\": \"email@email.com\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"SUSPENSO\",\n            \"tipoPlano\": \"ENFERMARIA\",\n            \"dataCadastro\": 1650138642438,\n            \"dataAtualizacao\": 1650138721830,\n            \"historico\": []\n        },\n        \"exameConsulta\": {\n            \"codigo\": \"CONS001\",\n            \"descricao\": null\n        },\n        \"codigoAutorizacao\": \"e7bbbd1e-2551-4ddf-b1a8-040430e85fd9\",\n        \"dataSolicitacao\": 1650138852972,\n        \"situacao\": \"SOLICITADO\",\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8083/v1/autorizacao/e7bbbd1e-2551-4ddf-b1a8-040430e85fd9\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Consultar Resultado da Autorização",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/autorizacao/:codigoAutorizacao",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"autorizacao",
+										":codigoAutorizacao"
+									],
+									"variable": [
+										{
+											"key": "codigoAutorizacao",
+											"value": "e7bbbd1e-2551-4ddf-b1a8-040430e85fd9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Conveniados",
+					"item": [
+						{
+							"name": "Listar Todos Conveniados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/conveniados/?filter=&limit=10&page=0",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"conveniados",
+										""
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": ""
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Todos Conveniados",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/conveniados/?filter=&limit=10&page=0",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"conveniados",
+												""
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": ""
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:49:22 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "76"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"nome\": \"Conveniado 21\",\n            \"cpf\": \"12345678921\",\n            \"email\": \"email@email.com\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"ATIVO\",\n            \"dataCadastro\": 1650138532766,\n            \"links\": [\n                {\n                    \"rel\": \"self\",\n                    \"href\": \"http://192.168.100.13:8082/v1/conveniados/3\"\n                }\n            ]\n        }\n    ],\n    \"page\": {\n        \"sort\": {\n            \"sorted\": false,\n            \"empty\": true,\n            \"unsorted\": true\n        },\n        \"pageSize\": 10,\n        \"pageNumber\": 0,\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalPages\": 1,\n    \"totalElements\": 1\n}"
+								}
+							]
+						},
+						{
+							"name": "Listar Conveniado Por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/conveniados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"conveniados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Conveniado Por Id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/conveniados/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"conveniados",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:49:13 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "25"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"nome\": \"Conveniado 21\",\n        \"cpf\": \"12345678921\",\n        \"email\": \"email@email.com\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"ATIVO\",\n        \"dataCadastro\": 1650138532766,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8082/v1/conveniados/3\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Cadastrar Conveniado",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cpf\": \"12345678921\",\n    \"nome\": \"Conveniado 21\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/conveniados",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"conveniados"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cadastrar Conveniado",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"cpf\": \"12345678921\",\n    \"nome\": \"Conveniado 21\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/conveniados",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"conveniados"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:48:52 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "334"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"nome\": \"Conveniado 21\",\n        \"cpf\": \"12345678921\",\n        \"email\": \"email@email.com\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"ATIVO\",\n        \"dataCadastro\": 1650138532766,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8082/v1/conveniados/3\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Atualizar Conveniado Prestador",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"cpf\": \"12345678921\",\n    \"nome\": \"Conveniado Atualizado\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"\",\n    \"email\": \"email@prestador.com.br\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"12\",\n    \"uf\": \"MA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/v1/conveniados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"v1",
+										"conveniados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Atualizar Conveniado Prestador",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 3,\n    \"cpf\": \"12345678921\",\n    \"nome\": \"Conveniado Atualizado\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"\",\n    \"email\": \"email@prestador.com.br\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"12\",\n    \"uf\": \"MA\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/v1/conveniados/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"v1",
+												"conveniados",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "3"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 14 Apr 2022 12:06:55 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 3,\n        \"nome\": \"Conveniado Atualizado\",\n        \"cpf\": \"12345678921\",\n        \"email\": \"email@prestador.com.br\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"12\",\n        \"uf\": \"MA\",\n        \"complemento\": \"\",\n        \"cep\": \"65000-000\",\n        \"dataAtualizacao\": 1649938015754,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://localhost:8080/v1/conveniados/3\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Excluir Conveniado Prestador",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/v1/conveniados/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"v1",
+										"conveniados",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Prestadores",
+					"item": [
+						{
+							"name": "Listar Todos Prestadores",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/prestadores/?filter=&limit=10&page=0",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"prestadores",
+										""
+									],
+									"query": [
+										{
+											"key": "filter",
+											"value": ""
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Todos Prestadores",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/prestadores/?filter=&limit=10&page=0",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"prestadores",
+												""
+											],
+											"query": [
+												{
+													"key": "filter",
+													"value": ""
+												},
+												{
+													"key": "limit",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "0"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:28:22 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "91"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "1"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": [\n        {\n            \"id\": 1,\n            \"nome\": \"Prestador 1\",\n            \"cpf\": \"12345678911\",\n            \"email\": \"email@email.com\",\n            \"especialidade\": \"Médico\",\n            \"dataNascimento\": 639705600109,\n            \"celular\": \"(98) 98100-8901\",\n            \"logradouro\": \"Rua do Bobos\",\n            \"bairro\": \"Bairro de Teste\",\n            \"cidade\": \"São Luis\",\n            \"numero\": \"0\",\n            \"uf\": \"MA\",\n            \"complemento\": \"string\",\n            \"cep\": \"65000-000\",\n            \"situacao\": \"ATIVO\",\n            \"dataCadastro\": 1650137164016,\n            \"links\": [\n                {\n                    \"rel\": \"self\",\n                    \"href\": \"http://192.168.100.13:8081/v1/prestadores/1\"\n                }\n            ]\n        }\n    ],\n    \"page\": {\n        \"sort\": {\n            \"sorted\": false,\n            \"empty\": true,\n            \"unsorted\": true\n        },\n        \"pageSize\": 10,\n        \"pageNumber\": 0,\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalPages\": 1,\n    \"totalElements\": 1\n}"
+								}
+							]
+						},
+						{
+							"name": "Listar Prestador Por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/prestadores/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"prestadores",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Listar Prestador Por Id",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/prestadores/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"prestadores",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:28:42 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "24"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"nome\": \"Prestador 1\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@email.com\",\n        \"especialidade\": \"Médico\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"ATIVO\",\n        \"dataCadastro\": 1650137164016,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8081/v1/prestadores/1\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Cadastrar Prestador",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cpf\": \"12345678912\",\n    \"nome\": \"Prestador 1\",\n    \"especialidade\": \"Médico\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/prestadores",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"prestadores"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Cadastrar Prestador",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"cpf\": \"12345678911\",\n    \"nome\": \"Prestador 1\",\n    \"especialidade\": \"Médico\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"string\",\n    \"email\": \"email@email.com\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"0\",\n    \"uf\": \"MA\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/prestadores",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"prestadores"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:26:04 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "785"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"nome\": \"Prestador 1\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@email.com\",\n        \"especialidade\": \"Médico\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"0\",\n        \"uf\": \"MA\",\n        \"complemento\": \"string\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"ATIVO\",\n        \"dataCadastro\": 1650137164016,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8081/v1/prestadores/1\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Atualizar Cadastro Prestador",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 1,\n    \"cpf\": \"12345678911\",\n    \"nome\": \"Prestador Atualizado\",\n    \"especialidade\": \"Médico\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"\",\n    \"email\": \"email@prestador.com.br\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"12\",\n    \"uf\": \"MA\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url-api-gateway}}/prestadores/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"prestadores",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Atualizar Cadastro Prestador",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"id\": 1,\n    \"cpf\": \"12345678911\",\n    \"nome\": \"Prestador Atualizado\",\n    \"especialidade\": \"Médico\",\n    \"dataNascimento\": \"1990-04-10T00:00:00.109Z\",\n    \"bairro\": \"Bairro de Teste\",\n    \"celular\": \"(98) 98100-8901\",\n    \"cep\": \"65000-000\",\n    \"cidade\": \"São Luis\",\n    \"complemento\": \"\",\n    \"email\": \"email@prestador.com.br\",\n    \"logradouro\": \"Rua do Bobos\",\n    \"numero\": \"12\",\n    \"uf\": \"MA\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{url-api-gateway}}/prestadores/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"prestadores",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "origin,access-control-request-method,access-control-request-headers,accept-encoding"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "gzip"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:31:08 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "41"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "1"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"data\": {\n        \"id\": 1,\n        \"nome\": \"Prestador Atualizado\",\n        \"cpf\": \"12345678911\",\n        \"email\": \"email@prestador.com.br\",\n        \"especialidade\": \"Médico\",\n        \"dataNascimento\": 639705600109,\n        \"celular\": \"(98) 98100-8901\",\n        \"logradouro\": \"Rua do Bobos\",\n        \"bairro\": \"Bairro de Teste\",\n        \"cidade\": \"São Luis\",\n        \"numero\": \"12\",\n        \"uf\": \"MA\",\n        \"complemento\": \"\",\n        \"cep\": \"65000-000\",\n        \"situacao\": \"ATIVO\",\n        \"dataCadastro\": 1650137164016,\n        \"dataAtualizacao\": 1650137468424,\n        \"links\": [\n            {\n                \"rel\": \"self\",\n                \"href\": \"http://192.168.100.13:8081/v1/prestadores/1\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "Excluir Cadastro Prestador",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url-api-gateway}}/prestadores/:id",
+									"host": [
+										"{{url-api-gateway}}"
+									],
+									"path": [
+										"prestadores",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Excluir Cadastro Prestador",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{url-api-gateway}}/prestadores/:id",
+											"host": [
+												"{{url-api-gateway}}"
+											],
+											"path": [
+												"prestadores",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"status": "No Content",
+									"code": 204,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "Date",
+											"value": "Sat, 16 Apr 2022 19:31:41 GMT"
+										},
+										{
+											"key": "X-Kong-Upstream-Latency",
+											"value": "18"
+										},
+										{
+											"key": "X-Kong-Proxy-Latency",
+											"value": "0"
+										},
+										{
+											"key": "Via",
+											"value": "kong/2.8.1"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				}
+			],
 			"description": "Este diretório contém todas as rotas documentadas no API Gateway"
 		},
 		{
@@ -212,13 +1690,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url-api-gateway}}/associados/v1",
+							"raw": "{{url-api-gateway}}/v1/associados",
 							"host": [
 								"{{url-api-gateway}}"
 							],
 							"path": [
-								"associados",
-								"v1"
+								"v1",
+								"associados"
 							]
 						}
 					},
